@@ -1,0 +1,33 @@
+<configuration debug="true" scan="true" scanPeriod="5 minutes">
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+		<resetJUL>true</resetJUL>
+	</contextListener>
+
+	<appender name="dev" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %16thread %5level %4line %24logger{24} %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logdir}%d{yyyyMMdd}.log
+			</fileNamePattern>
+			<maxHistory>3</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %16thread %5level %4line %24logger{24} %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="online" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="FILE" />
+	</appender>
+
+	<root level="info">
+		<appender-ref ref="dev" />
+	</root>
+</configuration>
